@@ -1,0 +1,61 @@
+{
+  "components": [
+    {
+      "label": "capacity",
+      "type": "number",
+      "layout": {
+        "row": "Row_0yokvgx",
+        "columns": null
+      },
+      "id": "Field_1retmgk",
+      "key": "capacity",
+      "defaultValue": 3,
+      "decimalDigits": 0,
+      "increment": "1"
+    },
+    {
+      "label": "containersCount",
+      "type": "number",
+      "layout": {
+        "row": "Row_1hkk3y5",
+        "columns": null
+      },
+      "id": "Field_0ia2b7p",
+      "key": "containersCount",
+      "defaultValue": 5,
+      "decimalDigits": 0,
+      "increment": "1"
+    },
+    {
+      "label": "preferredStrategyKey",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0oyg2ze",
+        "columns": null
+      },
+      "id": "Field_0u46qpz",
+      "key": "preferredStrategyKey",
+      "defaultValue": "default"
+    },
+    {
+      "label": "maxExecutionDuration",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_198drfa",
+        "columns": null
+      },
+      "id": "Field_04ibabw",
+      "key": "maxExecutionDuration",
+      "defaultValue": "PT1H"
+    }
+  ],
+  "type": "default",
+  "id": "Form_CargoshipContainerCompositionInput",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.29.0"
+  },
+  "schemaVersion": 17
+}

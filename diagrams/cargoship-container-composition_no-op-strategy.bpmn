@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_13lhbq7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.29.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:process id="container-composition_no-op-strategy" name="Cargoship Container Composition: No-Op Strategy" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0bcs8ya" sourceRef="StartEvent_1" targetRef="Activity_1il0izp" />
+    <bpmn:sequenceFlow id="Flow_18deaxi" sourceRef="Activity_1il0izp" targetRef="Event_1l4pyl5" />
+    <bpmn:serviceTask id="Activity_1il0izp" name="Execute No-Op Strategy">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="container-composition_no-op-strategy" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bcs8ya</bpmn:incoming>
+      <bpmn:outgoing>Flow_18deaxi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0bcs8ya</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1l4pyl5">
+      <bpmn:incoming>Flow_18deaxi</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_1ruueje" name="Message_SchedulingTaskInitiated_NoOp" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="container-composition_no-op-strategy">
+      <bpmndi:BPMNShape id="Activity_08z2mo7_di" bpmnElement="Activity_1il0izp">
+        <dc:Bounds x="270" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_146ybw2_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sb17jq_di" bpmnElement="Event_1l4pyl5">
+        <dc:Bounds x="422" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0bcs8ya_di" bpmnElement="Flow_0bcs8ya">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="270" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18deaxi_di" bpmnElement="Flow_18deaxi">
+        <di:waypoint x="370" y="120" />
+        <di:waypoint x="422" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

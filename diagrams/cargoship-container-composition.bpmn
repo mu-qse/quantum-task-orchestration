@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1blfzei" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.29.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:process id="cargoship-container-composition" name="Cargoship Container Composition" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0f2m9ys" sourceRef="Activity_1iiowy9" targetRef="Gateway_19a396n" />
+    <bpmn:sequenceFlow id="Flow_0fa2ofr" sourceRef="Activity_0z0b607" targetRef="Event_1kkqnlv" />
+    <bpmn:sequenceFlow id="Flow_0mbsqy5" sourceRef="Activity_1y9aefh" targetRef="Gateway_0wzfl70" />
+    <bpmn:sequenceFlow id="Flow_1vq75q4" sourceRef="StartEvent_1" targetRef="Activity_067ml6v">
+      <bpmn:extensionElements />
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_1iiowy9" name="Input Data Aggregation">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="container-composition_input-data-aggregation" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1jsv7es</bpmn:incoming>
+      <bpmn:outgoing>Flow_0f2m9ys</bpmn:outgoing>
+      <bpmn:property id="Property_0nwp9i8" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_02v11o2">
+        <bpmn:sourceRef>DataStoreReference_1cbj9g1</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0nwp9i8</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataInputAssociation id="DataInputAssociation_1szxad6">
+        <bpmn:sourceRef>DataObjectReference_1jg4xtc</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0nwp9i8</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1b1gfet">
+        <bpmn:targetRef>DataObjectReference_0h0kz82</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_07tmly4" name="No strategy selected" sourceRef="Gateway_0wzfl70" targetRef="Event_1g387b9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=selectedStrategyKey = null or selectedStrategyKey = "unknown" or selectedStrategyKey = "default"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_0z0b607" name="Output Data Aggregation">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="container-composition_output-data-aggregation" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1av1gg1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fa2ofr</bpmn:outgoing>
+      <bpmn:property id="Property_1ywcns8" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0hofakb">
+        <bpmn:sourceRef>DataStoreReference_1cbj9g1</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1ywcns8</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataInputAssociation id="DataInputAssociation_1cubsxe">
+        <bpmn:sourceRef>DataObjectReference_0ru1i7c</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1ywcns8</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0ispra4">
+        <bpmn:targetRef>DataObjectReference_0ru1i7c</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1kkqnlv" name="Container composition request completed">
+      <bpmn:incoming>Flow_0fa2ofr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_067ml6v" name="Input Data Selection">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="Form_CargoshipContainerCompositionInput" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vq75q4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jsv7es</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0cjpof6">
+        <bpmn:targetRef>DataObjectReference_1jg4xtc</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1jsv7es" sourceRef="Activity_067ml6v" targetRef="Activity_1iiowy9" />
+    <bpmn:startEvent id="StartEvent_1" name="Container composition request received">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=3" target="capacity" />
+          <zeebe:output source="=5" target="containersCount" />
+          <zeebe:output source="=uuid()" target="requestId" />
+          <zeebe:output source="=&#34;default&#34;" target="preferredStrategyKey" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1vq75q4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_0wzfl70" default="Flow_0n5fjk0">
+      <bpmn:incoming>Flow_0mbsqy5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n5fjk0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1lp02xz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_07tmly4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0n5fjk0" sourceRef="Gateway_0wzfl70" targetRef="Activity_02xw42k" />
+    <bpmn:sequenceFlow id="Flow_1lp02xz" name="Preferred strategy could not be selected" sourceRef="Gateway_0wzfl70" targetRef="Activity_1n7ueni">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=preferredStrategyKey != null and selectedStrategyKey = "unknown"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:callActivity id="Activity_02xw42k" name="Call strategy process">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="=selectedStrategyProcessId" propagateAllChildVariables="true" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0n5fjk0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1av1gg1</bpmn:outgoing>
+      <bpmn:property id="Property_1j2xc7i" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1iqw3oa">
+        <bpmn:sourceRef>DataObjectReference_0h0kz82</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1j2xc7i</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_09hx0fu">
+        <bpmn:targetRef>DataObjectReference_0ru1i7c</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1av1gg1" sourceRef="Activity_02xw42k" targetRef="Activity_0z0b607" />
+    <bpmn:businessRuleTask id="Activity_1y9aefh" name="Strategy Selection">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="container-composition_strategy-selection" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1j8e77v</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mbsqy5</bpmn:outgoing>
+      <bpmn:property id="Property_1viajn1" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1jqwivp">
+        <bpmn:sourceRef>DataObjectReference_0h0kz82</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1viajn1</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:businessRuleTask>
+    <bpmn:dataStoreReference id="DataStoreReference_1cbj9g1" name="Domain Data Storage">
+      <bpmn:extensionElements />
+    </bpmn:dataStoreReference>
+    <bpmn:dataObjectReference id="DataObjectReference_0ru1i7c" name="Domain-specific Problem Solution" dataObjectRef="DataObject_1mfjsfr" />
+    <bpmn:dataObject id="DataObject_1mfjsfr" />
+    <bpmn:dataObjectReference id="DataObjectReference_0h0kz82" name="Domain-specific Problem Instance" dataObjectRef="DataObject_0kkkl54" />
+    <bpmn:dataObject id="DataObject_0kkkl54" />
+    <bpmn:endEvent id="Event_1g387b9">
+      <bpmn:incoming>Flow_07tmly4</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1wvpmsv" errorRef="Error_1tuibdw" />
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_1n7ueni" name="Fallback to default strategy">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=&#34;default&#34;" resultVariable="preferredStrategyKey" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lp02xz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mjexhk</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_19a396n">
+      <bpmn:incoming>Flow_0f2m9ys</bpmn:incoming>
+      <bpmn:incoming>Flow_0mjexhk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j8e77v</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1j8e77v" sourceRef="Gateway_19a396n" targetRef="Activity_1y9aefh" />
+    <bpmn:sequenceFlow id="Flow_0mjexhk" sourceRef="Activity_1n7ueni" targetRef="Gateway_19a396n" />
+    <bpmn:dataObjectReference id="DataObjectReference_1jg4xtc" name="Domain-specific Problem Input" dataObjectRef="DataObject_186hbif" />
+    <bpmn:dataObject id="DataObject_186hbif" />
+  </bpmn:process>
+  <bpmn:message id="Message_3dd5g38" name="Message_SchedulingRequestReceived" />
+  <bpmn:error id="Error_05o1aip" name="Error_TaskAssignmentFailed" errorCode="TaskAssignmentFailed" />
+  <bpmn:message id="Message_3g53h8s" name="Message_SchedulingTaskCompleted">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=requestId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:error id="Error_1tuibdw" name="Error_NoStrategySelected" errorCode="NoStrategySelected" />
+  <bpmn:error id="Error_0ctalpf" name="Error_PreferredStrategyNotSelected" errorCode="PreferredStrategyNotSelected" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="cargoship-container-composition">
+      <bpmndi:BPMNShape id="Activity_0qcmuon_di" bpmnElement="Activity_1iiowy9">
+        <dc:Bounds x="420" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rtvq2b_di" bpmnElement="Activity_0z0b607">
+        <dc:Bounds x="1090" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kkqnlv_di" bpmnElement="Event_1kkqnlv">
+        <dc:Bounds x="1242" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1231" y="295" width="59" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ij51y4_di" bpmnElement="Activity_067ml6v">
+        <dc:Bounds x="270" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10wzsyn_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="150" y="295" width="82" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0wzfl70_di" bpmnElement="Gateway_0wzfl70" isMarkerVisible="true">
+        <dc:Bounds x="835" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02xw42k_di" bpmnElement="Activity_02xw42k">
+        <dc:Bounds x="940" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dycfbf_di" bpmnElement="Activity_1y9aefh">
+        <dc:Bounds x="680" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0ru1i7c_di" bpmnElement="DataObjectReference_0ru1i7c">
+        <dc:Bounds x="1122" y="405" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1099" y="462" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0h0kz82_di" bpmnElement="DataObjectReference_0h0kz82">
+        <dc:Bounds x="582" y="405" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="556" y="465" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1crxuev_di" bpmnElement="Event_1g387b9">
+        <dc:Bounds x="842" y="342" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09xljzb_di" bpmnElement="Activity_1n7ueni">
+        <dc:Bounds x="680" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_19a396n_di" bpmnElement="Gateway_19a396n" isMarkerVisible="true">
+        <dc:Bounds x="575" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1jg4xtc_di" bpmnElement="DataObjectReference_1jg4xtc">
+        <dc:Bounds x="382" y="405" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="361" y="462" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1cbj9g1_di" bpmnElement="DataStoreReference_1cbj9g1">
+        <dc:Bounds x="445" y="75" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="369.5" y="86" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_02v11o2_di" bpmnElement="DataInputAssociation_02v11o2">
+        <di:waypoint x="470" y="125" />
+        <di:waypoint x="470" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1szxad6_di" bpmnElement="DataInputAssociation_1szxad6">
+        <di:waypoint x="418" y="430" />
+        <di:waypoint x="430" y="430" />
+        <di:waypoint x="460" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jsv7es_di" bpmnElement="Flow_1jsv7es">
+        <di:waypoint x="370" y="270" />
+        <di:waypoint x="420" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f2m9ys_di" bpmnElement="Flow_0f2m9ys">
+        <di:waypoint x="520" y="270" />
+        <di:waypoint x="575" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1b1gfet_di" bpmnElement="DataOutputAssociation_1b1gfet">
+        <di:waypoint x="481" y="310" />
+        <di:waypoint x="520" y="430" />
+        <di:waypoint x="580" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0hofakb_di" bpmnElement="DataInputAssociation_0hofakb">
+        <di:waypoint x="495" y="100" />
+        <di:waypoint x="1140" y="100" />
+        <di:waypoint x="1140" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1cubsxe_di" bpmnElement="DataInputAssociation_1cubsxe">
+        <di:waypoint x="1140" y="405" />
+        <di:waypoint x="1140" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1av1gg1_di" bpmnElement="Flow_1av1gg1">
+        <di:waypoint x="1040" y="270" />
+        <di:waypoint x="1090" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fa2ofr_di" bpmnElement="Flow_0fa2ofr">
+        <di:waypoint x="1190" y="270" />
+        <di:waypoint x="1242" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0ispra4_di" bpmnElement="DataOutputAssociation_0ispra4">
+        <di:waypoint x="1140" y="310" />
+        <di:waypoint x="1140" y="405" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vq75q4_di" bpmnElement="Flow_1vq75q4">
+        <di:waypoint x="208" y="270" />
+        <di:waypoint x="270" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0cjpof6_di" bpmnElement="DataOutputAssociation_0cjpof6">
+        <di:waypoint x="320" y="310" />
+        <di:waypoint x="360" y="430" />
+        <di:waypoint x="382" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mbsqy5_di" bpmnElement="Flow_0mbsqy5">
+        <di:waypoint x="780" y="270" />
+        <di:waypoint x="835" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07tmly4_di" bpmnElement="Flow_07tmly4">
+        <di:waypoint x="860" y="295" />
+        <di:waypoint x="860" y="342" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="831" y="386" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n5fjk0_di" bpmnElement="Flow_0n5fjk0">
+        <di:waypoint x="885" y="270" />
+        <di:waypoint x="940" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lp02xz_di" bpmnElement="Flow_1lp02xz">
+        <di:waypoint x="860" y="245" />
+        <di:waypoint x="860" y="170" />
+        <di:waypoint x="780" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="855" y="140" width="89" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1iqw3oa_di" bpmnElement="DataInputAssociation_1iqw3oa">
+        <di:waypoint x="618" y="430" />
+        <di:waypoint x="910" y="430" />
+        <di:waypoint x="961" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_09hx0fu_di" bpmnElement="DataOutputAssociation_09hx0fu">
+        <di:waypoint x="1023" y="310" />
+        <di:waypoint x="1060" y="430" />
+        <di:waypoint x="1122" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1jqwivp_di" bpmnElement="DataInputAssociation_1jqwivp">
+        <di:waypoint x="618" y="430" />
+        <di:waypoint x="680" y="430" />
+        <di:waypoint x="726" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j8e77v_di" bpmnElement="Flow_1j8e77v">
+        <di:waypoint x="625" y="270" />
+        <di:waypoint x="680" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mjexhk_di" bpmnElement="Flow_0mjexhk">
+        <di:waypoint x="680" y="170" />
+        <di:waypoint x="600" y="170" />
+        <di:waypoint x="600" y="245" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
