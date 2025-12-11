@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/camunda-worker-python/camunda-worker-python.iml" filepath="$PROJECT_DIR$/camunda-worker-python/camunda-worker-python.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/quantum-service-orchestration.iml" filepath="$PROJECT_DIR$/.idea/quantum-service-orchestration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/quantum-task-orchestration.iml" filepath="$PROJECT_DIR$/.idea/quantum-task-orchestration.iml" />
     </modules>
   </component>
 </project>
