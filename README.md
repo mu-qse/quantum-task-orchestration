@@ -1,6 +1,6 @@
 # A Reference Architecture for Embedding Quantum Software Into Enterprise Systems
 
-DOI: [https://doi.org/10.1145/3748522.3779937](10.1145/3748522.3779937)
+DOI: [10.1145/3748522.3779937](https://doi.org/10.1145/3748522.3779937)
 
 Marc Uphues, Sebastian Thöne, and Herbert Kuchen
 
