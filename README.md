@@ -39,11 +39,8 @@ For the worker builds, you will need:
 ## Build of the Camunda Worker in Python
 
 1. Prepare a Python virtual environment within [Camunda Worker in Python](camunda-worker-python): `python -m venv .venv` (Windows) or `python3 -m venv .venv` (Linux)
-
 2. Activate the created virtual environment: `.venv\Scripts\activate.bat` (Windows) or `source .venv/bin/activate` (Linux)
-
 3. Install the necessary dependencies within the virtual environment: `pip install -r requirements.txt`
-
 4. Start the Camunda Worker in Python within the virtual environment: `python zeebe-worker.py` (Windows) or `python3 zeebe-worker.py` (Linux)
 
 ## Deployment and Run
