@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CamundaWorkerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="camunda-worker-java" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="de.fhms.mu.CamundaWorkerApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
